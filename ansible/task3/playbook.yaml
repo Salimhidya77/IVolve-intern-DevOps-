@@ -1,9 +1,9 @@
 ---
-- name: Setup DevOps tools (Docker, kubectl, Jenkins)
+- name: Configure Docker K8s Jenkins
   hosts: production
   become: true
   roles:
     - docker
     - kubectl
     - jenkins
-...
+

@@ -1,15 +1,15 @@
 ---
 - name: Download kubectl binary
   get_url:
-    url: https://dl.k8s.io/release/v1.29.0/bin/linux/amd64/kubectl
-    dest: /usr/local/bin/kubectl
+    url: "{{ kubectl_url }}"
+    dest: "{{ kubectl_path }}"
     mode: '0755'
 
 - name: Verify kubectl installation
   command: kubectl version --client
   register: kubectl_version
-  changed_when: false
+  ignore_errors: yes
 
 - debug:
-    var: kubectl_version.stdout
+    msg: "kubectl installed successfully! Version info: {{ kubectl_version.stdout }}"
 

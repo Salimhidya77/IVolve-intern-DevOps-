@@ -1,24 +1,23 @@
 ---
 - name: Add Jenkins repository
   get_url:
-    url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+    url: "{{ jenkins_repo }}"
     dest: /etc/yum.repos.d/jenkins.repo
 
 - name: Import Jenkins key
   rpm_key:
-    key: https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
     state: present
+    key: "{{ jenkins_key }}"
 
 - name: Install Java and Jenkins
-  dnf:
-    name:
-      - java-17-openjdk
-      - jenkins
+  yum:
+    name: "{{ jenkins_packages }}"
     state: present
 
-- name: Enable and start Jenkins
+- name: Enable and start Jenkins service
   service:
-    name: jenkins
+    name: "{{ jenkins_service }}"
     state: started
     enabled: true
-...
+  notify: Restart Jenkins
+

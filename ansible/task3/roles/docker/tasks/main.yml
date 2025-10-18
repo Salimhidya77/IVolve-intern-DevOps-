@@ -1,0 +1,23 @@
+---
+- name: Install required packages
+  yum:
+    name: "{{ docker_packages }}"
+    state: present
+
+- name: Add Docker repository
+  get_url:
+    url: "{{ docker_repo }}"
+    dest: /etc/yum.repos.d/docker-ce.repo
+
+- name: Install Docker
+  yum:
+    name: docker-ce
+    state: present
+
+- name: Enable and start Docker service
+  service:
+    name: "{{ docker_service }}"
+    state: started
+    enabled: true
+  notify: Restart Docker
+
