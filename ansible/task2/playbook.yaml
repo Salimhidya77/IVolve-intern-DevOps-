@@ -1,6 +1,6 @@
 ---
 - name: Automated Web Server Configuration
-  hosts: hosts
+  hosts: production
   become: true
   tasks:
     - name: Install nginx

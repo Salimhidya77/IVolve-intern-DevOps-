@@ -1,0 +1,9 @@
+---
+- name: Setup DevOps tools (Docker, kubectl, Jenkins)
+  hosts: production
+  become: true
+  roles:
+    - docker
+    - kubectl
+    - jenkins
+...
