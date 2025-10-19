@@ -10,7 +10,7 @@
 ---
 1. **Create a vault**:
    ```bash
-   ansible-vault create vault.yml
+   ansible-vault create mysql_vault.yaml
 
 ---   
 2. Playbook: `mysql-playbook.yaml`
