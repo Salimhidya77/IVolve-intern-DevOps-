@@ -1,4 +1,4 @@
-# ansible-vault encrypt vault.yml
+# ansible-vault encrypt mysql_vault.yaml
 
 
 ## Objectives
@@ -10,55 +10,26 @@
 ---
 1. **Create a vault**:
    ```bash
-   ansible-vault create mysql_vault.yml
+   ansible-vault create vault.yml
 
 ---   
 2. Playbook: `mysql-playbook.yaml`
     ```yaml
-   --
-- name: Install and configure MySQL
-  hosts: production
-  become: true
-  vars_files:
-    - vars/mysql_vault.yml
+   # Ansible Playbook: Install and Configure MySQL
 
-  tasks:
-    - name: Install MySQL
-      ansible.builtin.package:
-        name: mysql-server
-        state: present
+This Ansible playbook automates the installation and configuration of **MySQL** on a production server. It also creates a database and a dedicated user with full privileges.
 
-    - name: Ensure MySQL service is running
-      ansible.builtin.service:
-        name: mysqld
-        state: started
-        enabled: true
+---
 
-    - name: Create iVolve database
-      community.mysql.mysql_db:
-        name: iVolve
-        state: present
-        login_user: root
-        login_password: "{{ mysql_root_password }}"
+## Prerequisites
 
-    - name: Create user with privileges
-      community.mysql.mysql_user:
-        name: ivolve_user
-        password: "{{ ivolve_user_password }}"
-        priv: 'iVolve.*:ALL'
-        state: present
-        login_user: root
-        login_password: "{{ mysql_root_password }}"
+- Ansible installed on your control machine
+- Managed node accessible via SSH
+- `vars/mysql_vault.yml` file containing encrypted passwords:
 
-    - name: Validate connection and list databases
-      ansible.builtin.shell: >
-        mysql -u ivolve_user -p{{ ivolve_user_password }} -e "SHOW DATABASES;"
-      register: db_check
-
-    - name: Print validation output
-      ansible.builtin.debug:
-        var: db_check.stdout_lines
-
+```yaml
+mysql_root_password: your_root_password
+ivolve_user_password: your_ivolve_user_password
 
 ---
 3. **Create an Inventory File** `inventory.ini`:
