@@ -1,0 +1,12 @@
+## if you want edit ur passwd use this comand : 
+
+## ( >> ansible-vault edit vars/mysql_vault.yml )
+
+
+
+### new paeesw
+#
+#
+# mysql_root_password: "root123"
+# ivolve_user_password: "ivolve123"
+
